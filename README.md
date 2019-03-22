@@ -1,5 +1,5 @@
 # Ambo
-Ambo - Borrow and Lend Crypto
+Borrow and Lend Crypto on Ambo
 
 Don't let your assets sit idle! Ambo allows you to earn money from holding crypto, and borrow funds whenever you need.
 
@@ -25,8 +25,8 @@ Changes are merged in from __dev__ to __master__.
 
 ### Requirements
 
-- Node
-- NPM
+- Node >= 6
+- npm >= 5.2
 - Mongo
 
 1. Clone this repository
@@ -49,7 +49,7 @@ The three major goals of this project were
 # Tools & Technologies
 
 ### Client:
-- React.js
+- [React.js v16.8.5](https://reactjs.org/)
 - Redux
 - React Router
 
