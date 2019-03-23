@@ -41,16 +41,17 @@ $ npm install
 
 # Goals
 
-The three major goals of this project were
-1. Create a secure borrow/lending application for the Compound Finance protocol
-2. Do it quickly! (Within 7 days)
-3. Design an easy to use front end web interface
+The major goals of this project were
+1. Make the experience of lending and borrowing crypto as seamless and as easy as possible.
+1. Create a secure application using the Compound Finance protocol.
+1. Do it quickly! (Within 5 days)
 
-# Tools & Technologies
+# Primary Tools & Technologies
 
 ### Client:
 - [React.js v16.8.5](https://reactjs.org/)
 - Redux
+- Redux Persist
 - React Router
 
 ### API:
@@ -59,6 +60,7 @@ The three major goals of this project were
 
 ### Integrations:
 - Compound Finance
+- [web3.js](https://github.com/ethereum/web3.js/)
 
 ### Database:
 - Mongo
