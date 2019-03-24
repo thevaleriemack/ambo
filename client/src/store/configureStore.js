@@ -7,7 +7,7 @@ import ReduxThunk from 'redux-thunk';
 import rootReducer from './rootReducer';
 
 const persistConfig = {
-  key: 'root',
+  key: 'amb-root',
   storage,
   stateReconciler: autoMergeLevel1
 }

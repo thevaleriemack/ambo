@@ -1,0 +1,2 @@
+export const SET_ALL_SUCCESS = 'SET_ALL_SUCCESS';
+export const SET_ALL_FAILURE = 'SET_ALL_FAILURE';
