@@ -3,7 +3,7 @@ import React from 'react';
 const AssetCard = (props) => {
   return (
     <div onClick={props.onClick}>
-      <p>AssetCard</p>
+      <p>{props.name}</p>
     </div>
   );
 }
