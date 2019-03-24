@@ -7,21 +7,21 @@ Don't let your assets sit idle! Ambo allows you to earn money from holding crypt
 This repository is home to the Ambo web application--a dApp that allows users to borrow and lend their crypto assets with the Compound Finance MoneyMarket.
 
 ### TOC:
-Usage
+[Usage](#usage)
 
-Goals
+[Goals](#goals)
 
-Tools & Technologies
+[Primary Tools & Technologies](#primary%20tools%20%26%20technologies)
 
-Repo Structure
+[Folder Structure](#folder%20structure)
 
-Contact Info
+[Contact Info](#contact%20info)
 
 # Usage
 
 ### Branches
-The 2 primary branches used are __master__ and __dev__.
-Changes are merged in from __dev__ to __master__.
+The default branch is __dev__.
+Changes are merged in from __dev__ to __master__ before being deployed to production.
 
 ### Requirements
 
@@ -31,13 +31,21 @@ Changes are merged in from __dev__ to __master__.
 
 1. Clone this repository
 1. Edit config files
-1. Install node modules
-
+1. Run the api server
+```
+$ cd ambo
+$ cd api
+$ yarn install
+$ npm run dev
+```
+4. Run the client
 ```
 $ cd ambo
 $ cd client
-$ npm install
+$ yarn install
+$ npm run start
 ```
+
 
 # Goals
 
@@ -50,25 +58,28 @@ The major goals of this project were
 
 ### Client:
 - [React.js v16.8.5](https://reactjs.org/)
-- Redux
-- Redux Persist
 - React Router
 - [Reactstrap](https://reactstrap.github.io/)
+- Redux
+- Redux Persist
 
 ### API:
-- Node.js
-- Express
+- [Node.js](https://nodejs.org/)
+- [Express](https://expressjs.com/)
 
 ### Integrations:
-- Compound Finance
+- [Compound Finance](https://compound.finance/)
 - [web3.js](https://github.com/ethereum/web3.js/)
 
 ### Database:
 - Mongo
 
-# Repo Structure
+# Folder Structure
 
 ```
+|
+├── api - API server using web3 to interact with Compound Finance, and other Ethereum related APIs
+└── client - Frontend web interface
 ```
 
 # Contact Info
