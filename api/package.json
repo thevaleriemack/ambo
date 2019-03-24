@@ -1,16 +1,29 @@
 {
   "name": "ambo-api",
   "version": "0.1.0",
-  "description": "",
   "author": "thevaleriemack",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/bin/www",
+    "build": "babel ./src --out-dir dist",
+    "dev": "NODE_ENV=development DEBUG=api:* babel-node ./src/bin/www",
+    "prod": "NODE_ENV=production node ./dist/bin/www",
+    "watch": "nodemon"
   },
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.18.3",
-    "express": "^4.16.4",
-    "mongoose": "^5.4.19"
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "morgan": "~1.9.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.4.0",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.2",
+    "nodemon": "^1.18.10"
   }
 }
