@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react'
 
 import App from './App';
+import Loading from './pages/Loading';
 import * as serviceWorker from './serviceWorker';
 import configureStore from './store/configureStore';
 
@@ -11,10 +12,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
 
-const { store } = configureStore();
+const { store, persistor } = configureStore();
 
 ReactDOM.render(
-      <App />,
+  <Provider store={store}>
+    <PersistGate loading={<Loading/>} persistor={persistor}>
+    <App />
+    </PersistGate>
+  </Provider>,
   document.getElementById('root')
 );
 
