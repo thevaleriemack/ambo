@@ -53,6 +53,7 @@ The major goals of this project were
 - Redux
 - Redux Persist
 - React Router
+- [Reactstrap](https://reactstrap.github.io/)
 
 ### API:
 - Node.js
