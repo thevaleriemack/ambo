@@ -13,13 +13,13 @@ const getAssets = async () => {
   return assets;
 }
 
-export function getAll() {
+export function getAllAssets() {
   return async dispatch => {
     const assets = await getAssets();
     if (assets == null) {
-      dispatch(actions.setAllFailure());
+      dispatch(actions.setAllAssetsFailure());
     } else {
-      dispatch(actions.setAll(assets));
+      dispatch(actions.setAllAssets(assets));
     }
   }
 }

@@ -1,9 +1,9 @@
 import * as types from './types.js';
 
-export function setAll(assets) {
-  return { type: types.SET_ALL_SUCCESS, payload: assets }
+export function setAllAssets(assets) {
+  return { type: types.SET_ALL_ASSETS_SUCCESS, payload: assets }
 }
 
-export function setAllFailure() {
-  return { type: types.SET_ALL_FAILURE }
+export function setAllAssetsFailure() {
+  return { type: types.SET_ALL_ASSETS_FAILURE }
 }
