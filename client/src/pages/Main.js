@@ -1,25 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Jumbotron } from 'reactstrap';
 
-import Section from '../components/Section';
+import Section from '../components/Section/Section';
+import SectionEmpty from '../components/Section/SectionEmpty';
 import { getAllAssets, getAssetImages } from '../store/assets';
 import { setUserLocale } from '../store/user';
 
 import './Main.css';
 
 import emptyStateCopy from '../data/emptyStateCopy.json';
-
-const EmptyState = (props) => {
-  return(
-    <Jumbotron fluid>
-      <Container fluid>
-        <h1 className="display-4">{props.heading}</h1>
-        <p className="lead">{props.body}</p>
-      </Container>
-    </Jumbotron>
-  );
-}
 
 class Main extends Component {
   componentDidMount() {
@@ -39,7 +28,8 @@ class Main extends Component {
               heading="Borrowing"
               assets={[]}
             >
-              <EmptyState
+              <SectionEmpty
+                title="Borrowing"
                 heading={emptyStateCopy.borrow.heading}
                 body={emptyStateCopy.borrow.body}
               />
@@ -48,7 +38,8 @@ class Main extends Component {
               heading="Lending"
               assets={[]}
             >
-              <EmptyState
+              <SectionEmpty
+                title="Lending"
                 heading={emptyStateCopy.lend.heading}
                 body={emptyStateCopy.lend.body}
               />

@@ -5,8 +5,6 @@ import { Collapse } from 'reactstrap';
 import AssetCard from './AssetCard';
 import AssetTray from './AssetTray';
 
-
-
 class Asset extends Component {
 
   state = { trayOpen: false }

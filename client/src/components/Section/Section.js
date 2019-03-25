@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import Asset from './Asset/Asset';
+import Asset from '../Asset/Asset';
 
 const renderAssets = (assets) => {
   return assets.map((asset) => (
@@ -13,7 +13,7 @@ const renderAssets = (assets) => {
   ))
 }
 
-const Section = (props) => {
+export default function Section(props) {
   return(
     <div>
       <h1>{props.heading}</h1>
@@ -22,5 +22,3 @@ const Section = (props) => {
     </div>
   );
 }
-
-export default Section;

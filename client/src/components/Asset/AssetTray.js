@@ -1,9 +1,7 @@
 import React from 'react';
 
-const AssetTray = () => {
+export default function AssetTray() {
   return(
     <div>AssetTray</div>
   );
 }
-
-export default AssetTray;

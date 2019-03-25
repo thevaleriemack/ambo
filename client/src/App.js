@@ -5,6 +5,7 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
+import 'antd/dist/antd.css';
 
 import Main from './pages/Main';
 import NoMatch from './pages/NoMatch';

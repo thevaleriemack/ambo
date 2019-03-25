@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { Avatar, Card } from 'antd';
 
-import 'antd/dist/antd.css';
-
 const { Meta } = Card;
 
-const AssetCard = (props) => {
+export default function AssetCard(props) {
   const [loading, setLoading] = useState(false);
   return (
     <div onClick={props.onClick}>
@@ -19,5 +17,3 @@ const AssetCard = (props) => {
     </div>
   );
 }
-
-export default AssetCard;
