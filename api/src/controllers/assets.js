@@ -94,11 +94,9 @@ exports.getImages = async (req, res) => {
   
   let images = infos;
   if (images !== 400) {
-    images = infos.Data.map(a => {
-      return {
-        lookup: a.CoinInfo.Name,
-        imageUrl: imageUrlBase + a.CoinInfo.ImageUrl
-      }
+    images = {}
+    infos.Data.map(a => {
+      images[a.CoinInfo.Name] = imageUrlBase + a.CoinInfo.ImageUrl
     });
   }
 
