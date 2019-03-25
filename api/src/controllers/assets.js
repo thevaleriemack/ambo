@@ -8,13 +8,23 @@ const cryptoCompareAxios = axios.create({
   }
 });
 
-const priceURL = (ticker, currency) => (
+const tickersArray = assets.map(a => a.lookup);
+const tickersString = tickersArray.toString();
+const currencyCodesString = currencyCodes.toString();
+
+const priceUrl = (ticker, currency) => (
   `https://min-api.cryptocompare.com/data/price?fsym=${ticker}&tsyms=${currency}`
 );
 
-const manyPricesURL = (tickers, currencies) => (
+const manyPricesUrl = (tickers, currencies) => (
   `https://min-api.cryptocompare.com/data/pricemulti?fsyms=${tickers}&tsyms=${currencies}`
 );
+
+const generalInfoUrl = (tickers) => (
+  `https://min-api.cryptocompare.com/data/coin/generalinfo?fsyms=${tickers}&tsym=USD`
+);
+
+const imageUrlBase = 'https://www.cryptocompare.com';
 
 const handleError = (resp) => {
   if (resp.data.Response === 'Error') {
@@ -28,11 +38,7 @@ const handleError = (resp) => {
  */
 
 exports.getAllAssetsData = async (req, res) =>  {
-  const tickersArray = assets.map(a => a.lookup);
-  const tickers = tickersArray.toString();
-  const currencies = currencyCodes.toString();
-
-  const url = manyPricesURL(tickers, currencies);
+  const url = manyPricesUrl(tickersString, currencyCodesString);
   const prices = await cryptoCompareAxios.get(url)
     .catch((err) => {
       console.error(err);
@@ -41,18 +47,16 @@ exports.getAllAssetsData = async (req, res) =>  {
       return handleError(resp) || resp.data;
     });
   
-  const assetsData = assets.map(asset => {
-    return {...asset, prices: prices[asset.lookup] }
+  const assetsData = assets.map(a => {
+    return { ...a, prices: prices[a.lookup] }
   });
 
   res.send(assetsData);
 }
 
 exports.getPrices = async (req, res) => {
-  const tickers = req.query.tickers;
-  const currencies = req.query.currencies;
-
-  const url = manyPricesURL(tickers, currencies);
+  const { tickers, currencies } = req.query;
+  const url = manyPricesUrl(tickers, currencies);
   const prices = await cryptoCompareAxios.get(url)
     .catch((err) => {
       console.error(err);
@@ -66,7 +70,7 @@ exports.getPrices = async (req, res) => {
 
 exports.getPrice = async (req, res) => {
   const { ticker, currency } = req.params;
-  const url = priceURL(ticker, currency);
+  const url = priceUrl(ticker, currency);
   const price = await cryptoCompareAxios.get(url)
     .catch((err) => {
       console.error(err);
@@ -76,4 +80,27 @@ exports.getPrice = async (req, res) => {
     });
   
   res.send(String(price));
+}
+
+exports.getImages = async (req, res) => {
+  const url = generalInfoUrl(tickersString);
+  const infos = await cryptoCompareAxios.get(url)
+    .catch((err) => {
+      console.error(err);
+    })
+    .then((resp) => {
+      return handleError(resp) || resp.data;
+    });
+  
+  let images = infos;
+  if (images !== 400) {
+    images = infos.Data.map(a => {
+      return {
+        lookup: a.CoinInfo.Name,
+        imageUrl: imageUrlBase + a.CoinInfo.ImageUrl
+      }
+    });
+  }
+
+  res.send(images);
 }

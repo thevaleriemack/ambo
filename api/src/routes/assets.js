@@ -7,6 +7,9 @@ const router = Router();
 router.get('/', [
   AssetsController.getAllAssetsData
 ]);
+router.get('/images', [
+  AssetsController.getImages
+]);
 router.get('/prices', [
   AssetsController.getPrices
 ]);
