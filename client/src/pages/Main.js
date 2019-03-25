@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Container, Jumbotron } from 'reactstrap';
 
 import Section from '../components/Section';
-import { getAllAssets } from '../store/assets';
+import { getAllAssets, getAssetImages } from '../store/assets';
 import { setUserLocale } from '../store/user';
 
 import './Main.css';
@@ -25,6 +25,7 @@ class Main extends Component {
   componentDidMount() {
     this.props.setUserLocale();
     this.props.getAllAssets();
+    this.props.getAssetImages();
   }
 
   render() {
@@ -66,5 +67,6 @@ class Main extends Component {
 
 export default connect(({assets, user}) => ({assets, user}), {
   setUserLocale,
-  getAllAssets
+  getAllAssets,
+  getAssetImages
 })(Main);

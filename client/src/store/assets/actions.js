@@ -7,3 +7,11 @@ export function setAllAssets(assets) {
 export function setAllAssetsFailure() {
   return { type: types.SET_ALL_ASSETS_FAILURE }
 }
+
+export function setAssetImages(images) {
+  return { type: types.SET_ASSET_IMAGES_SUCCESS, payload: images }
+}
+
+export function setAssetImagesFailure() {
+  return { type: types.SET_ASSET_IMAGES_FAILURE }
+}

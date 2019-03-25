@@ -8,7 +8,7 @@ const renderAssets = (assets) => {
       key={asset.ticker}
       name={asset.name}
       ticker={asset.ticker}
-      imageUrl={asset.imageUrl}
+      lookup={asset.lookup}
     />
   ))
 }
