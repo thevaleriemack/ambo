@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, Jumbotron } from 'reactstrap';
 
-import { getAll } from '../store/assets';
 import Section from '../components/Section';
+import { getAllAssets } from '../store/assets';
+import { setUserLocale } from '../store/user';
 
 import './Main.css';
 
@@ -22,7 +23,8 @@ const EmptyState = (props) => {
 
 class Main extends Component {
   componentDidMount() {
-    this.props.getAll();
+    this.props.setUserLocale();
+    this.props.getAllAssets();
   }
 
   render() {
@@ -62,6 +64,7 @@ class Main extends Component {
   }
 }
 
-export default connect(({assets}) => ({assets}), {
-  getAll
+export default connect(({assets, user}) => ({assets, user}), {
+  setUserLocale,
+  getAllAssets
 })(Main);
