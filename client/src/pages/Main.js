@@ -32,7 +32,7 @@ class Main extends Component {
       <div className="container">
         <div className="row">
           <div className="col"></div>
-          <div className="col-6">
+          <div className="col-lg-6">
             <div>Main</div>
             <Section
               heading="Borrowing"

@@ -11,7 +11,7 @@ const Asset = (props) => {
     <div>
       <AssetCard
         onClick={() => setOpen(!open)}
-        name={props.name}
+        {...props}
       />
       <Collapse
         isOpen={open}

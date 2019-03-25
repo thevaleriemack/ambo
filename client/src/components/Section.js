@@ -4,7 +4,12 @@ import Asset from './Asset/Asset';
 
 const renderAssets = (assets) => {
   return assets.map((asset) => (
-    <Asset key={asset.ticker} name={asset.name} />
+    <Asset
+      key={asset.ticker}
+      name={asset.name}
+      ticker={asset.ticker}
+      imageUrl={asset.imageUrl}
+    />
   ))
 }
 
