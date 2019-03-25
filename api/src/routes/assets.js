@@ -5,7 +5,7 @@ import AssetsController from '../controllers/assets';
 const router = Router();
 
 router.get('/', [
-  AssetsController.getAll
+  AssetsController.getAllAssetsData
 ]);
 router.get('/prices', [
   AssetsController.getPrices

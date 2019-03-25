@@ -1,5 +1,6 @@
 import axios from 'axios';
 import assets from '../compound/assets';
+import currencyCodes from '../utils/currencyCodes';
 
 const cryptoCompareAxios = axios.create({
   headers: {
@@ -17,7 +18,8 @@ const manyPricesURL = (tickers, currencies) => (
 
 const handleError = (resp) => {
   if (resp.data.Response === 'Error') {
-    return resp.data.Message;
+    console.error(resp.data.Message)
+    return 400;
   }
 }
 
@@ -25,19 +27,30 @@ const handleError = (resp) => {
  * Exports
  */
 
-exports.getAll = (req, res) =>  {
-  res.send(assets);
+exports.getAllAssetsData = async (req, res) =>  {
+  const tickersArray = assets.map(a => a.lookup);
+  const tickers = tickersArray.toString();
+  const currencies = currencyCodes.toString();
+
+  const url = manyPricesURL(tickers, currencies);
+  const prices = await cryptoCompareAxios.get(url)
+    .catch((err) => {
+      console.error(err);
+    })
+    .then((resp) => {
+      return handleError(resp) || resp.data;
+    });
+  
+  const assetsData = assets.map(asset => {
+    return {...asset, prices: prices[asset.lookup] }
+  });
+
+  res.send(assetsData);
 }
 
 exports.getPrices = async (req, res) => {
-  let currencies = "USD";
-  const tickersArray = assets.map(a => a.ticker);
-  let tickers = tickersArray.toString();
-
-  if (req.query !== undefined) {
-    currencies = req.query.currencies || currencies;
-    tickers = req.query.tickers || tickers;
-  }
+  const tickers = req.query.tickers;
+  const currencies = req.query.currencies;
 
   const url = manyPricesURL(tickers, currencies);
   const prices = await cryptoCompareAxios.get(url)
