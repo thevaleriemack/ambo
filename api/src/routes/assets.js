@@ -1,11 +1,17 @@
 import { Router } from 'express';
 
-import assets from '../compound/assets';
+import AssetsController from '../controllers/assets';
 
 const router = Router();
 
-router.get('/', function(req, res, next) {
-  res.send(assets);
-});
+router.get('/', [
+  AssetsController.getAll
+]);
+router.get('/prices', [
+  AssetsController.getPrices
+]);
+router.get('/:ticker/price/:currency', [
+  AssetsController.getPrice
+]);
 
 export default router;
