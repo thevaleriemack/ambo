@@ -1,7 +1,10 @@
 import assetsRouter from './assets';
-import documentationRouter from './documentation';
+import compoundRouter from './compound';
 
 export default (app) => {
-  app.use('/', documentationRouter);
+  app.get('/', function(req, res, next) {
+    res.render('index', { title: 'Ambo API Documentation' });
+  });
   app.use('/assets', assetsRouter);
+  app.use('/compound', compoundRouter);
 }

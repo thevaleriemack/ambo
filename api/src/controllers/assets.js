@@ -1,12 +1,6 @@
-import axios from 'axios';
-import assets from '../compound/assets';
+import axios from '../services/cryptoCompare/HTTPClient';
+import assets from '../services/compound/assets';
 import currencyCodes from '../utils/currencyCodes';
-
-const cryptoCompareAxios = axios.create({
-  headers: {
-    'Authorization': process.env.CRYPTO_COMPARE_KEY
-  }
-});
 
 const tickersArray = assets.map(a => a.lookup);
 const tickersString = tickersArray.toString();
@@ -37,9 +31,9 @@ const handleError = (resp) => {
  * Exports
  */
 
-exports.getAllAssetsData = async (req, res) =>  {
+export const getAllAssetsData = async (req, res) =>  {
   const url = manyPricesUrl(tickersString, currencyCodesString);
-  const prices = await cryptoCompareAxios.get(url)
+  const prices = await axios.get(url)
     .catch((err) => {
       console.error(err);
     })
@@ -54,10 +48,10 @@ exports.getAllAssetsData = async (req, res) =>  {
   res.send(assetsData);
 }
 
-exports.getPrices = async (req, res) => {
+export const getPrices = async (req, res) => {
   const { tickers, currencies } = req.query;
   const url = manyPricesUrl(tickers, currencies);
-  const prices = await cryptoCompareAxios.get(url)
+  const prices = await axios.get(url)
     .catch((err) => {
       console.error(err);
     })
@@ -68,10 +62,10 @@ exports.getPrices = async (req, res) => {
   res.send(prices);
 }
 
-exports.getPrice = async (req, res) => {
+export const getPrice = async (req, res) => {
   const { ticker, currency } = req.params;
   const url = priceUrl(ticker, currency);
-  const price = await cryptoCompareAxios.get(url)
+  const price = await axios.get(url)
     .catch((err) => {
       console.error(err);
     })
@@ -82,9 +76,9 @@ exports.getPrice = async (req, res) => {
   res.send(String(price));
 }
 
-exports.getImages = async (req, res) => {
+export const getImages = async (req, res) => {
   const url = generalInfoUrl(tickersString);
-  const infos = await cryptoCompareAxios.get(url)
+  const infos = await axios.get(url)
     .catch((err) => {
       console.error(err);
     })
