@@ -28,7 +28,7 @@ export default function SectionEmpty(props) {
                 <a>
                   <img
                     src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg"
-                    alt="doc"
+                    alt="learn"
                   />
                   Learn More
               </a>
