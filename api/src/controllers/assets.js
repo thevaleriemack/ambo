@@ -41,11 +41,14 @@ export const getAllAssetsData = async (req, res) =>  {
       return handleError(resp) || resp.data;
     });
   
-  const assetsData = assets.map(a => {
-    return { ...a, prices: prices[a.lookup] }
-  });
-
-  res.send(assetsData);
+  if (prices === 400) {
+    res.sendStatus(400);
+  } else {
+    const assetsData = assets.map(a => {
+      return { ...a, prices: prices[a.lookup] }
+    });
+    res.send(assetsData);
+  }
 }
 
 export const getPrices = async (req, res) => {
@@ -73,7 +76,11 @@ export const getPrice = async (req, res) => {
       return handleError(resp) || resp.data[currency];
     });
   
-  res.send(String(price));
+  if (price === 400) {
+    res.sendStatus(400);
+  } else {
+    res.send(String(price));
+  }
 }
 
 export const getImages = async (req, res) => {
@@ -81,18 +88,19 @@ export const getImages = async (req, res) => {
   const infos = await axios.get(url)
     .catch((err) => {
       console.error(err);
+      res.sendStatus(400);
     })
     .then((resp) => {
       return handleError(resp) || resp.data;
     });
   
-  let images = infos;
-  if (images !== 400) {
-    images = {}
+  if (infos !== 400) {
+    let images = {}
     infos.Data.map(a => {
       images[a.CoinInfo.Name] = imageUrlBase + a.CoinInfo.ImageUrl
     });
+    res.send(images);
+  } else {
+    res.sendStatus(400);
   }
-
-  res.send(images);
 }
