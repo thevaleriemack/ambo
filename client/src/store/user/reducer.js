@@ -1,12 +1,18 @@
-import * as types from './types.js';
+import * as types from './types';
 
-export const initialState = {
+const initialState = {
+  address: "",
   locale: 'en',
   currency: 'USD'
 };
 
-export default function assetsReducer(state = initialState, action) {
+export default function userReducer(state = initialState, action) {
   switch (action.type) {
+
+    case types.SET_ADDRESS_SUCCESS:
+      return { ...state, address: action.payload }
+    case types.SET_ADDRESS_FAILURE:
+      return state;
 
     case types.SET_CURRENCY_SUCCESS:
       return { ...state, currency: action.payload };

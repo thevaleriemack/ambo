@@ -1,5 +1,10 @@
-import * as actions from './actions';
 import LocaleCurrency from 'locale-currency';
+
+import * as actions from './actions';
+
+export function setUserAddress(addr) {
+  return dispatch => { dispatch(actions.setUserAddress(addr)); }
+}
 
 export function setUserLocale(locale=undefined) {
   if (locale === undefined) {
