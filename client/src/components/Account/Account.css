@@ -1,0 +1,68 @@
+.wrap {
+  display: flex;
+}
+
+.content {
+  flex: 1;
+}
+
+.extraContent {
+  min-width: 240px;
+  text-align: right;
+}
+
+.content .description {
+  display: table;
+}
+
+.description .term {
+  display: table-cell;
+  margin-right: 8px;
+  padding-bottom: 8px;
+  white-space: nowrap;
+  line-height: 20px;
+}
+
+.description .term:after {
+  position: relative;
+  top: -0.5px;
+  margin: 0 8px 0 2px;
+  content: ":";
+}
+
+.description .detail {
+  display: table-cell;
+  padding-bottom: 8px;
+  width: 100%;
+  line-height: 20px;
+}
+
+.Account-PageHeader {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.Account-PageHeader .ant-page-header-title-view {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Account-PageHeader .ant-page-header-title-view-extra {
+  position: static;
+  padding-top: 10px;
+}
+
+#Account-logo {
+  height: 2.5rem;
+}
+
+.AccountAddress {
+  text-align: right;
+}
+
+.AccountAddress-close-icon {
+  padding-left: 8px;
+  vertical-align: baseline;
+}
