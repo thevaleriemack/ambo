@@ -1,8 +1,9 @@
 import axios from '../services/cryptoCompare/HTTPClient';
-import assets from '../services/compound/assets';
+import assetsMain from '../services/compound/assets';
+import assetsRinkeby from '../services/compound/assets.rinkeby';
 import currencyCodes from '../utils/currencyCodes';
 
-const tickersArray = assets.map(a => a.lookup);
+const tickersArray = assetsMain.map(a => a.lookup);
 const tickersString = tickersArray.toString();
 const currencyCodesString = currencyCodes.toString();
 
@@ -27,6 +28,19 @@ const handleError = (resp) => {
   }
 }
 
+const getAssets = (nid) => {
+  switch (nid) {
+    case "1" || 1:
+      return assetsMain;
+    
+    case "4" || 4:
+      return assetsRinkeby;
+    
+    default:
+      return null;
+  }
+}
+
 /**
  * Exports
  */
@@ -40,6 +54,9 @@ export const getAllAssetsData = async (req, res) =>  {
     .then((resp) => {
       return handleError(resp) || resp.data;
     });
+  
+  const { networkId } = req.query;
+  const assets = getAssets(networkId);
   
   if (prices === 400) {
     res.sendStatus(400);
