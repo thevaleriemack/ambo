@@ -11,7 +11,7 @@ const persistConfig = {
   key: 'amb-root',
   storage,
   stateReconciler: autoMergeLevel1,
-  blacklist: ['eth']
+  blacklist: ['account', 'eth']
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
