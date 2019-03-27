@@ -1,5 +1,5 @@
 import * as actions from './actions';
-import axios from '../axiosConfig';
+import axios from '../../axiosConfig';
 
 export function getAllAssets() {
   return async dispatch => {
