@@ -1,10 +1,14 @@
 import * as actions from './actions';
 import axios from '../../axiosConfig';
 
-export function getAllAssets() {
+export function getAllAssets(networkId=1) {
   return async dispatch => {
 
-    const assets = await axios.get('/assets')
+    const assets = await axios.get('/assets', {
+      params: {
+        networkId
+      }
+    })
       .catch((err) => {
         console.error("Redux-Axios", err);
         return null;
