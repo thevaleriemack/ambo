@@ -45,6 +45,7 @@ class Main extends Component {
   }
 
   updateCredentials = () => {
+    // TODO: update balances, update data pulled
     let addr = getAddress();
     if (addr !== this.props.user.address) {
       this.props.setUserAddress(addr);
@@ -60,7 +61,7 @@ class Main extends Component {
       <div className="container">
         <div className="row">
           <div className="col"></div>
-          <div className="col-lg-6">
+          <div className="col-lg-8">
             <Account />
             <Section
               heading="Borrowing"
