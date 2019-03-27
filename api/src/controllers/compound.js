@@ -1,9 +1,10 @@
 // https://compound.finance/developers#market-history-api
 import axios from '../services/compound/HTTPClient';
+import Units from 'ethereumjs-units';
 
 export const accountData = async (req, res) => {
   const { address } = req.params;
-  
+  const { units } = req.query;
   await axios.post('/risk/v1/get_account_value', {
     account_address: address
   })
@@ -15,9 +16,12 @@ export const accountData = async (req, res) => {
       res.status(400).send(resp.data.error.message);
     } else {
       const d = resp.data;
-      const lendAmount = d.account_value.total_supply_value_in_eth.value;
-      const borrowAmount = d.account_value.total_borrow_value_in_eth.value;
-      const units = 'ether';
+      const lendAmount = Units.convert(
+        d.account_value.total_supply_value_in_eth.value, "wei", units
+      );
+      const borrowAmount = Units.convert(
+        d.account_value.total_borrow_value_in_eth.value, "wei", units
+      );
       res.send({lendAmount, borrowAmount, units});
     }
   });

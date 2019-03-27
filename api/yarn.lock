@@ -773,6 +773,11 @@ basic-auth@~2.0.0:
   dependencies:
     safe-buffer "5.1.2"
 
+bignumber.js@^2.3.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-2.4.0.tgz#838a992da9f9d737e0f4b2db0be62bb09dd0c5e8"
+  integrity sha1-g4qZLan51zfg9LLbC+YrsJ3Qxeg=
+
 binary-extensions@^1.0.0:
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-1.13.0.tgz#9523e001306a32444b907423f1de2164222f6ab1"
@@ -1248,6 +1253,13 @@ etag@~1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
+
+ethereumjs-units@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/ethereumjs-units/-/ethereumjs-units-0.2.0.tgz#6ea31132aabc2cc7b8a5290e265593a337687fa3"
+  integrity sha1-bqMRMqq8LMe4pSkOJlWTozdof6M=
+  dependencies:
+    bignumber.js "^2.3.0"
 
 execa@^0.7.0:
   version "0.7.0"
