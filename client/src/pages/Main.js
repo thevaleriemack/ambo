@@ -21,7 +21,6 @@ import './Main.css';
 
 class Main extends Component {
 
-
   componentDidMount() {
     this.props.setUserLocale();
     this.props.getAllAssets();
@@ -30,29 +29,35 @@ class Main extends Component {
       .then(() => {
         if (this.props.eth.namespaced) {
           ethereumListener(() => {
-            if (this.props.eth.enabled) this.updateCredentials();
+            if (this.props.eth.enabled) {
+              this.updateCredentials()
+                .then(() => {
+                  this.props.getAllAssets(this.props.eth.networkId);
+                });
+            }
           });
         }
       });
   }
 
   checkNamespace = async () => {
-    if ((window.web3 !== undefined) || (window.ethereum !== undefined)) {
+    if ((window.web3 !== undefined) ||
+        (window.ethereum !== undefined)
+    ) {
       await this.props.updateNamespaceStatus(true);
     } else {
       await this.props.updateNamespaceStatus(false);
     }
   }
 
-  updateCredentials = () => {
-    // TODO: update balances, update data pulled
+  updateCredentials = async () => {
     let addr = getAddress();
     if (addr !== this.props.user.address) {
-      this.props.setUserAddress(addr);
+      await this.props.setUserAddress(addr);
     }
     let id = getNetworkId();
     if (id !== this.props.eth.networkId) {
-      this.props.setEthNetwork(id);
+      await this.props.setEthNetwork(id);
     }
   }
 
