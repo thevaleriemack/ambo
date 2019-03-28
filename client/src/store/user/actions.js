@@ -1,5 +1,9 @@
 import * as types from './types';
 
+export function setUserActivatedList(list) {
+  return { type: types.SET_ACTIVATED_SUCCESS, payload: list }
+}
+
 export function setUserAddress(addr) {
   return { type: types.SET_ADDRESS_SUCCESS, payload: addr }
 }

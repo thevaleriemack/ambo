@@ -3,11 +3,15 @@ import * as types from './types';
 const initialState = {
   address: "",
   locale: 'en',
-  currency: 'USD'
+  currency: 'USD',
+  activated: []
 };
 
 export default function userReducer(state = initialState, action) {
   switch (action.type) {
+
+    case types.SET_ACTIVATED_SUCCESS:
+      return { ...state, activated: action.payload }
 
     case types.SET_ADDRESS_SUCCESS:
       return { ...state, address: action.payload }

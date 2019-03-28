@@ -2,6 +2,10 @@ import LocaleCurrency from 'locale-currency';
 
 import * as actions from './actions';
 
+export function setUserActivatedList(list) {
+  return dispatch => { dispatch(actions.setUserActivatedList(list)); }
+}
+
 export function setUserAddress(addr) {
   return dispatch => { dispatch(actions.setUserAddress(addr)); }
 }
