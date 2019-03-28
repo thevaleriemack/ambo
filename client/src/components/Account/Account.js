@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  Badge,
   Button,
   PageHeader,
   Tag
@@ -10,6 +11,7 @@ import AccountAddress from './AccountAddress';
 import AccountAddressForm from './AccountAddressForm';
 import AccountBalances from './AccountBalances';
 import { connectProvider } from '../../ethereum';
+import { setAccountConnected } from '../../store/account';
 import { updateEnabledStatus } from '../../store/eth';
 import { setUserAddress } from '../../store/user';
 
@@ -18,21 +20,17 @@ import './Account.css';
 
 class Account extends Component {
 
-  state = {
-    connected: false
-  }
-
   handleConnect = async () => {
     if (this.props.eth.namespaced) {
       const connected = await connectProvider();
       this.props.updateEnabledStatus(connected);
-      this.setState({connected});
+      this.props.setAccountConnected(connected);
     }
   }
 
   renderNetworkTag = () => {
     if ((this.props.eth.networkId !== "1") &&
-        (this.props.eth.networkId !== "")) {
+      (this.props.eth.networkId !== "")) {
       return <Tag color="blue">{this.props.eth.networkName}</Tag>;
     } else {
       return null;
@@ -41,6 +39,7 @@ class Account extends Component {
 
   renderAddress = () => {
     if (this.props.eth.namespaced) {
+
       if (this.props.eth.enabled) {
         return <AccountAddress />;
       } else {
@@ -50,17 +49,25 @@ class Account extends Component {
           </Button>
         );
       }
+
     } else {
-      if (this.props.user.address !== "") {
+
+      if (this.props.account.connected) {
         return <AccountAddress />;
       } else {
-        return <AccountAddressForm setAddress={this.props.setUserAddress} />;
+        return (
+          <AccountAddressForm
+            setUserAddress={this.props.setUserAddress}
+            setAccountConnected={this.props.setAccountConnected}
+          />
+        );
       }
+
     }
   }
 
   render() {
-    return(
+    return (
       <div>
         <PageHeader
           className="Account-PageHeader"
@@ -71,13 +78,19 @@ class Account extends Component {
           }
           tags={this.renderNetworkTag()}
           extra={this.renderAddress()}
+          footer={
+            <Badge
+              count={this.props.user.currency}
+              style={{ backgroundColor: '#1890FF' }}
+            />
+          }
         >
           <div className="wrap">
             <div className="content padding">
               Finance for the 21st Century
             </div>
             {((this.props.user.address !== "") &&
-              this.state.connected) && <AccountBalances />}
+              this.props.account.connected) && <AccountBalances />}
           </div>
         </PageHeader>
       </div>
@@ -85,7 +98,11 @@ class Account extends Component {
   }
 }
 
-export default connect(({eth, user}) => ({eth, user}), {
-  setUserAddress,
-  updateEnabledStatus
-})(Account);
+export default connect(
+  ({ account, eth, user }) => ({ account, eth, user }),
+  {
+    setAccountConnected,
+    setUserAddress,
+    updateEnabledStatus
+  }
+)(Account);

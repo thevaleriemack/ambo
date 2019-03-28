@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 
 const AccountAddressForm = (props) => {
+  
   const [input, setInput] = useState("");
 
   const handleChange = (e) => {
@@ -11,9 +12,10 @@ const AccountAddressForm = (props) => {
   const handleSubmit = () => {
     const address = input.trim();
     if (address !== "") {
-      props.setAddress(address);
+      props.setUserAddress(address);
+      props.setAccountConnected(true);
     } else {
-      // Invalid public key address
+      message.error("Invalid public key address");
     }
   }
 

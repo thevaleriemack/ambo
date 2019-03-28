@@ -66,3 +66,7 @@
   padding-left: 8px;
   vertical-align: baseline;
 }
+
+.ant-page-header-footer {
+  margin: 0 !important;
+}

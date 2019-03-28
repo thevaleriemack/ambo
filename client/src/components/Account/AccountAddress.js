@@ -2,9 +2,16 @@ import React, { Component } from 'react';
 import { Icon } from 'antd';
 import { connect } from 'react-redux';
 
+import { setAccountConnected } from '../../store/account';
 import { setUserAddress } from '../../store/user';
 
 class AccountAddress extends Component {
+
+  handleClear = () => {
+    this.props.setUserAddress("");
+    this.props.setAccountConnected(false);
+  }
+
   render() {
     return(
       <p className="AccountAddress">
@@ -14,7 +21,8 @@ class AccountAddress extends Component {
           <Icon
             className="AccountAddress-close-icon"
             type="close-circle"
-            theme="filled" onClick={() => { this.props.setUserAddress(""); }}
+            theme="filled"
+            onClick={this.handleClear}
           />
         }
       </p>
@@ -23,5 +31,6 @@ class AccountAddress extends Component {
 }
 
 export default connect(({eth, user}) => ({eth, user}), {
+  setAccountConnected,
   setUserAddress
 })(AccountAddress);
