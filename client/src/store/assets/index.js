@@ -1,12 +1,16 @@
 import * as actions from './actions';
 import axios from '../../axiosConfig';
+import { web3 } from '../../ethereum';
 
 export function getAllAssets(networkId=1) {
   return async dispatch => {
 
+    const blockTimestamp = await web3.eth.getBlock("latest").timestamp;
+
     const assets = await axios.get('/assets', {
       params: {
-        networkId
+        networkId,
+        blockTimestamp
       }
     })
       .catch((err) => {

@@ -1,9 +1,5 @@
-export const SET_CONNECTED_SUCCESS = 'SET_CONNECTED_SUCCESS';
+import * as actions from './actions';
 
-export function setUserConnected(bool) {
-  return dispatch => {
-    dispatch(() => (
-      { type: SET_CONNECTED_SUCCESS, payload: bool }
-    ));
-  }
+export function setAccountConnected(bool) {
+  return dispatch => { dispatch(actions.setAccountConnected(bool)); }
 }
