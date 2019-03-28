@@ -29,3 +29,13 @@ export const getAddress = () => {
 export const getNetworkId = () => {
   return ethereum.networkVersion;
 }
+
+export const getBlockTimestamp = async () => {
+  const timestamp = await web3.eth.getBlock("latest", (err, block) => {
+    if (err) {
+      console.error(err);
+      return null;
+    }
+    return block.timestamp;
+  });
+}

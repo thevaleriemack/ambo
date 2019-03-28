@@ -1,4 +1,5 @@
 import axios from 'axios';
+import axiosCompound from '../services/compound/HTTPClient';
 import axiosCryptoCompare from '../services/cryptoCompare/HTTPClient';
 import assetsMain from '../services/compound/assets';
 import assetsRinkeby from '../services/compound/assets.rinkeby';
@@ -72,12 +73,31 @@ const axiosCryptoCompareGetData = async (url) => {
  * Exports
  */
 
+export const getRate = async (assetAddr, blockTimestamp) => {
+  const out = await axiosCompound.get('/market_history/v1/graph', {
+    params: {
+      asset: assetAddr,
+      min_block_timestamp: blockTimestamp,
+      max_block_timestamp: blockTimestamp,
+      num_buckets: 1
+    }
+  })
+  .catch((err) => {
+    console.error("here error");
+    return null;
+  })
+  .then((resp) => {
+    return resp.data;
+  });
+  return out;
+}
+
 export const getAllAssetsData = async (req, res) =>  {
   // Get prices for the assets
   const url = manyPricesUrl(tickersString, currencyCodesString);
   const prices = await axiosCryptoCompareGetData(url);
   
-  const { networkId } = req.query;
+  const { networkId, blockTimestamp } = req.query;
   const assets = getAssets(networkId);
   
   if (prices === 400) {
@@ -85,8 +105,19 @@ export const getAllAssetsData = async (req, res) =>  {
   } else {
     // Merge prices with asset data
     const assetsData = assets.map(a => {
-      return { ...a, prices: prices[a.lookup] }
+      const rate = getRate(a.address, blockTimestamp);
+      const d = {
+        ...a,
+        prices: prices[a.lookup],
+        lendRate: rate.supply_rates,
+        borrowRate: rate.borrow_rates
+      }
+
+      return d;
+
     });
+
+    console.log(assetsData);
     res.send(assetsData);
   }
 }

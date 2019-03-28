@@ -12,7 +12,7 @@ class CardData extends Component {
       <Row>
         <Col>
           {this.props.user.currency + " "}
-          {this.props.prices[this.props.user.currency]}
+          {this.props.prices && this.props.prices[this.props.user.currency]}
         </Col>
         <Col>
           {!this.props.activated &&
