@@ -29,7 +29,12 @@ Changes are merged in from __dev__ to __master__ before being deployed to produc
 - npm >= 5.2
 
 1. Clone this repository
-1. Edit config files
+1. In the root of /api add a .env file with 3 API keys
+```
+CRYPTO_COMPARE_KEY="Apikey <key>"
+COMPOUND_KEY="<key>"
+ETHERSCAN_KEY="<key>"
+```
 1. Run the api server
 ```
 $ cd ambo
@@ -45,19 +50,27 @@ $ yarn install
 $ npm run start
 ```
 
-# Goals
+### Implemented (Mainnet)
 
-The major goals of this project were
-1. Make the experience of lending and borrowing crypto as seamless and as easy as possible.
-1. Create a secure application using the Compound Finance protocol.
-1. Do it quickly! (Within 5 days)
+- "Connect" your MetaMask wallet
+- Check your Compound Finance balances
+- Approve an ERC20 by clicking "Activate"
+- View Compound Finance assets
+- Lend funds and earn interest
+
+### In Progress
+
+- Borrow, repay, and withdraw (In the meantime, these can be done on the Compound Finance app until completed here.)
+- View rates
+- Testnet
+- Localize
+- Moar API error handling for ease of use
 
 # Primary Tools & Technologies
 
 ### Client:
 - [React.js v16.8.5](https://reactjs.org/)
-- Redux
-- Redux Persist
+- [Redux Persist](https://github.com/rt2zz/redux-persist)
 - [Ant Design](https://ant.design/)
 - [Reactstrap](https://reactstrap.github.io/)
 
@@ -68,25 +81,27 @@ The major goals of this project were
 ### Integrations:
 - [Compound Finance](https://compound.finance/)
 - [web3.js](https://github.com/ethereum/web3.js/)
+- [Crypto Compare](https://www.cryptocompare.com/)
+- [Etherscan](https://etherscan.io)
 
 # Folder Structure
 
 ```
 •
 ├── api - API server using web3 to interact with Compound Finance, and other Ethereum related APIs
-    ├── public - A splash page for the API
-    └── src - All application logic
-        └── bin - HTTP server
-        ├── controllers - Request/response logic
-        ├── routes - URIs
-        ├── services - HTTP clients for third party APIs
-        └── utils - Helper modules
+│   ├── public - A splash page for the API
+│   └── src - All application logic
+│       ├── bin - HTTP server
+│       ├── controllers - Request/response logic
+│       ├── routes - URIs
+│       ├── services - HTTP clients for third party APIs
+│       └── utils - Helper modules
 └── client - Frontend web interface
     ├── public - HTML page where the SPA is rendered
     └── src - All application logic
         ├── components - Components that have no route
         ├── data - JSON files holding static data
-        ├── ethereum
+        ├── ethereum - Utilities to connect to Ethereum via web3
         ├── images - Image files
         ├── pages - Components that have their own route
         └── store - Redux store configuration and logic
