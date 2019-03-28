@@ -1,5 +1,13 @@
 /* https://ant.design/components/page-header/ */
 
+.Section {
+  margin: 30px 0;
+}
+
+.Section:last-child {
+  margin-bottom: 80px;
+}
+
 .wrap {
   display: flex;
 }
@@ -25,4 +33,12 @@
 
 .contentLink a img {
   margin-right: 8px;
+}
+
+.SectionEmpty-icon {
+  width: 2rem;
+}
+
+.SectionEmpty-logo {
+  width: 18rem;
 }

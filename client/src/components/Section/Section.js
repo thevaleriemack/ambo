@@ -6,19 +6,19 @@ const renderAssets = (assets) => {
   return assets.map((asset) => (
     <Asset
       key={asset.ticker}
-      name={asset.name}
-      ticker={asset.ticker}
-      lookup={asset.lookup}
+      {...asset}
     />
   ))
 }
 
-export default function Section(props) {
+const Section = (props) => {
   return(
-    <div>
-      <h1>{props.heading}</h1>
+    <div className="Section" id={props.heading.toString()}>
+      <h5>{props.heading}</h5>
       {props.children}
       {renderAssets(props.assets)}
     </div>
   );
 }
+
+export default Section;
