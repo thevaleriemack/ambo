@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from '../axiosConfig';
+import { getBlockTimestamp } from '../ethereum';
 
 export const accountData = async (address) => {
   const url = `/compound/account/${address}`;
@@ -14,6 +15,31 @@ export const accountData = async (address) => {
     .then((resp) => {
       return resp && resp.data;
     });
+  return data;
+}
+
+export const assetRate = async (assetAddress) => {
+  const url = `/compound/market/${assetAddress}`;
+
+  const blockHeader = await getBlockTimestamp();
+  const minBlockTime = 1541463122;
+  const maxBlockTime = blockHeader.timestamp;
+  const buckets = 1;
+
+  const data = await axios.get(url, {
+    params: {
+      minBlockTime,
+      maxBlockTime,
+      buckets
+    }
+  })
+    .catch((err) => {
+      console.error(err);
+    })
+    .then((resp) => {
+      return resp && resp.data;
+    });
+  
   return data;
 }
 
@@ -33,32 +59,54 @@ export const walletBalance = async (address, ticker, networkId) => {
   return data;
 }
 
-export default function hotLoad(WrappedComponent, selectProp, fun) {
+const funNames = {
+  "accountData": accountData,
+  "assetRate": assetRate,
+  "walletBalance": walletBalance
+}
+
+export default function hotLoad(WrappedComponent, funList) {
+
   return class extends Component {
     constructor(props) {
       super(props);
-      this.state = { data: null };
+      this.state = { loaded: false };
     }
 
-    async componentDidMount() {
-      const data = await fun(...selectProp(this.props));
-      this.setState({ data });
+    componentDidMount() {
+      funList.forEach(async arr => {
+        await this.updateState(arr);
+      });
+      this.setState({ loaded: true })
     }
 
-    async componentDidUpdate(prevProps) {
-      const prev = selectProp(prevProps);
-      const curr = selectProp(this.props);
-      for (let i = 0; i < prev.length; i++) {
-        if (prev[i] !== curr[i]) {
-          const data = await fun(...selectProp(this.props));
-          this.setState({ data });
-          return;
+    componentDidUpdate(prevProps) {
+      funList.forEach(async arr => {
+        const propsSelector = arr[1];
+        const prev = propsSelector(prevProps);
+        const curr = propsSelector(this.props);
+        for (let i = 0; i < prev.length; i++) {
+          if (prev[i] !== curr[i]) {
+            await this.updateState(arr);
+            return;
+          }
         }
-      }
+      });
+    }
+
+    updateState = async (arr) => {
+      const funName = arr[0];
+      const propsSelector = arr[1];
+      const fun = funNames[funName];
+      const data = await fun(...propsSelector(this.props));
+      this.setState({ [funName]: data });
     }
 
     render() {
-      return <WrappedComponent api={this.state.data} {...this.props} />;
+      return (
+        this.state.loaded &&
+        <WrappedComponent api={this.state} {...this.props} />
+      );
     }
   }
 }

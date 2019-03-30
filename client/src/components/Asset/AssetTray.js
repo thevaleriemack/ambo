@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Borrow from '../Compound/Borrow';
 import Lend from '../Compound/Lend';
-import hotLoad, { walletBalance } from '../hotLoad';
+import hotLoad from '../hotLoad';
 
 class AssetTray extends Component {
 
@@ -25,7 +25,7 @@ class AssetTray extends Component {
             <div className="gutter-box">Borrow</div>
             {this.props.account.connected &&
               <Borrow
-                limit={this.props.api}
+                limit={this.props.api.walletBalance}
                 assetAddress={this.props.address}
                 assetTicker={this.props.ticker}
               />
@@ -40,14 +40,14 @@ class AssetTray extends Component {
               Your Wallet Balance
             </div>
             <div>
-              {this.renderBalance(this.props.api)}
+              {this.renderBalance(this.props.api.walletBalance)}
             </div>
           </Col>
           <Col className="gutter-row" span={8}>
             <div className="gutter-box">Lend</div>
             {this.props.account.connected &&
               <Lend
-                limit={this.props.api}
+                limit={this.props.api.walletBalance}
                 assetAddress={this.props.address}
                 assetTicker={this.props.ticker}
               />
@@ -61,8 +61,10 @@ class AssetTray extends Component {
 
 const AssetTrayHotLoaded = hotLoad(
   AssetTray,
-  (props) => [props.user.address, props.ticker, props.eth.networkId],
-  walletBalance
+  [
+    ["assetRate", (props) => [props.address]],
+    ["walletBalance", (props) => [props.user.address, props.ticker, props.eth.networkId]]
+  ]
 );
 
 export default connect(

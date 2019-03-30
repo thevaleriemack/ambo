@@ -30,12 +30,13 @@ export const getNetworkId = () => {
   return ethereum.networkVersion;
 }
 
-export const getBlockTimestamp = async () => {
-  const timestamp = await web3.eth.getBlock("latest", (err, block) => {
+export const getBlockTimestamp = () => {
+  const blockHeader = web3.eth.getBlock("latest", (err, block) => {
     if (err) {
       console.error(err);
       return null;
     }
-    return block.timestamp;
+    return block;
   });
+  return blockHeader;
 }

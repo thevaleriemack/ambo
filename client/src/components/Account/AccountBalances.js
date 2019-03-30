@@ -6,7 +6,7 @@ import {
 } from 'antd';
 import { connect } from 'react-redux';
 
-import hotLoad, { accountData } from '../hotLoad';
+import hotLoad from '../hotLoad';
 
 class AccountBalances extends Component {
 
@@ -26,34 +26,34 @@ class AccountBalances extends Component {
     return "";
   }
 
-  renderAvailable = () => {
-    if (this.props.api) {
-      const reqLendAmount = this.props.api.borrowAmount * 1.5;
-      const available = this.props.api.lendAmount - reqLendAmount;
+  renderAvailable = (borrow, lend) => {
+      const reqLendAmount = borrow * 1.5;
+      const available = lend - reqLendAmount;
       return this.convertToFiat(available);
-    }
   }
 
   render() {
+    const borrowAmount = this.props.api.accountData && this.props.api.accountData.borrowAmount;
+    const lendAmount = this.props.api.accountData && this.props.api.accountData.lendAmount;
     return (
       <div className="extraContent">
         <Row>
           <Col span={8}>
             <Statistic
               title="Borrowing"
-              value={this.renderValue(this.props.api, "borrowAmount")}
+              value={this.convertToFiat(borrowAmount)}
             />
           </Col>
           <Col span={8}>
             <Statistic
               title="Lending"
-              value={this.renderValue(this.props.api, "lendAmount")}
+              value={this.convertToFiat(lendAmount)}
             />
           </Col>
           <Col span={8}>
             <Statistic
               title="Available"
-              value={this.renderAvailable()}
+              value={this.renderAvailable(borrowAmount, lendAmount)}
             />
           </Col>
         </Row>
@@ -64,8 +64,9 @@ class AccountBalances extends Component {
 
 const AccountBalancesHotLoaded = hotLoad(
   AccountBalances,
-  (props) => [props.user.address],
-  accountData
+  [
+    ["accountData", (props) => [props.user.address]]
+  ]
 );
 
 export default connect(
