@@ -3,6 +3,7 @@ import { Avatar, Card, Col, List, Row, Skeleton } from 'antd';
 import { connect } from 'react-redux';
 
 import ActivateAsset from './ActivateAsset';
+import hotLoad from '../hotLoad';
 
 const { Meta } = Card;
 
@@ -50,4 +51,11 @@ const AssetCard = (props) => {
   );
 }
 
-export default AssetCard;
+const AssetCardHotLoaded = hotLoad(
+  AssetCard,
+  [
+    ["assetRate", (props) => [props.address]]
+  ]
+);
+
+export default AssetCardHotLoaded;
