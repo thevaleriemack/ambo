@@ -8,6 +8,6 @@ import {
 const router = Router();
 
 router.get('/account/:address', [accountData]);
-router.get('/market/:asset', [marketData]);
+router.get('/market/:assetAddress', [marketData]);
 
 export default router;
