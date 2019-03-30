@@ -30,10 +30,14 @@ const getAssetContract = async (ticker, addr, networkId) => {
   return new web3.eth.Contract(abi, addr);
 }
 
-const approveAmount = web3.utils.toWei(BigNumber(2**32).toString());
-
 export const activateAsset = async (assetAddr, userAddr) => {
+  if (!web3) {
+    console.warn("Can not activate asset");
+    return null;
+  };
   const Contract = new web3.eth.Contract(ERC20Abi, assetAddr);
+  const approveAmount = web3.utils.toWei(BigNumber(2**32).toString());
+
   const result = await Contract.methods.approve(moneyMarketAddress, approveAmount)
     .send({
       from: userAddr
@@ -50,6 +54,10 @@ export const activateAsset = async (assetAddr, userAddr) => {
 }
 
 export const assetActivated = async (assetAddr, userAddr) => {
+  if (!web3) {
+    console.warn("Can not detect activated status");
+    return null;
+  }
   const Contract = new web3.eth.Contract(ERC20Abi, assetAddr);
   const result = await Contract.methods.allowance(userAddr, moneyMarketAddress)
     .call({

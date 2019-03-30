@@ -7,14 +7,14 @@ const contractAbi = moneyMarket.abi;
 const contractAddress = moneyMarket.networks[1].address;
 const contractAddressRinkeby = moneyMarket.networks[4].address;
 
-const MoneyMarket = new web3.eth.Contract(
+const MoneyMarket = (web3) ? new web3.eth.Contract(
   contractAbi,
   contractAddress
-);
-const MoneyMarketRinkeby = new web3.eth.Contract(
+) : null;
+const MoneyMarketRinkeby = (web3) ? new web3.eth.Contract(
   contractAbi,
   contractAddressRinkeby
-);
+) : null;
 
 const getContractInstance = (nid) => {
   switch (nid) {
