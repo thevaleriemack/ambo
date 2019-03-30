@@ -31,12 +31,17 @@ export const getNetworkId = () => {
 }
 
 export const getBlockTimestamp = () => {
-  const blockHeader = web3.eth.getBlock("latest", (err, block) => {
-    if (err) {
-      console.error(err);
-      return null;
-    }
-    return block;
-  });
-  return blockHeader;
+  if (ethereum) {
+    const blockHeader = web3.eth.getBlock("latest", (err, block) => {
+      if (err) {
+        console.error(err);
+        return null;
+      }
+      return block;
+    });
+    return blockHeader;
+  } else {
+    console.warn("Ethereum provider was not detected")
+    return null;
+  }
 }

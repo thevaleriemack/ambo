@@ -22,6 +22,9 @@ export const assetRate = async (assetAddress) => {
   const url = `/compound/market/${assetAddress}`;
 
   const blockHeader = await getBlockTimestamp();
+  if (!blockHeader) {
+    return null;
+  }
   const minBlockTime = 1541463122;
   const maxBlockTime = blockHeader.timestamp;
   const buckets = 1;
@@ -45,6 +48,8 @@ export const assetRate = async (assetAddress) => {
 
 export const walletBalance = async (address, ticker, networkId) => {
   const url = `/account/${address}/${ticker}`;
+
+  if (!networkId) networkId = 1;
   const data = await axios.get(url, {
     params: {
       networkId
