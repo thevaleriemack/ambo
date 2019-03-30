@@ -43,7 +43,7 @@ export const assetRate = async (assetAddress) => {
       return resp && resp.data;
     });
   
-  return data;
+  return (data) ? data : null;
 }
 
 export const walletBalance = async (address, ticker, networkId) => {

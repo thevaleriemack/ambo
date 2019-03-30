@@ -7,6 +7,8 @@ import AssetTray from './AssetTray';
 import { assetActivated } from '../../ethereum/assets';
 import { setUserActivatedList } from '../../store/user';
 
+import './Asset.css';
+
 class Asset extends Component {
 
   state = { trayOpen: false }
