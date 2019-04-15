@@ -14,7 +14,7 @@ export function getAllAssets(networkId=1) {
         return null;
       })
       .then((res) => {
-        return res.data;
+        return res && res.data;
       });
 
     if (assets === null) {
