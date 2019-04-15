@@ -68,16 +68,17 @@ export const marketData = async (req, res) => {
       num_buckets: buckets
     }
   })
-    .catch((err) => {
-      res.status(400).send(err);
-      return;
-    })
     .then((resp) => {
       if (resp.data.error.message !== "") {
         res.status(400).send(resp.data.error.message);
       } else {
         res.send(resp.data);
       }
-    });
+    })
+    .catch((err) => {
+      res.status(400).send(err.response.statusText);
+      return;
+    })
+    ;
   return;
 }
