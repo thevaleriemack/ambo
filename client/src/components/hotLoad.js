@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from '../axiosConfig';
-import { getBlockTimestamp } from '../ethereum';
 
 export const accountData = async (address) => {
   const url = `/compound/account/${address}`;
@@ -21,12 +20,10 @@ export const accountData = async (address) => {
 export const assetRate = async (assetAddress) => {
   const url = `/compound/market/${assetAddress}`;
 
-  const blockHeader = await getBlockTimestamp();
-  if (!blockHeader) {
-    return null;
-  }
-  const minBlockTime = 1541463122;
-  const maxBlockTime = blockHeader.timestamp;
+  const currentTime = Math.floor(Date.now()/1000);
+
+  const minBlockTime = currentTime - 86400; // subtracting 24 hours
+  const maxBlockTime = currentTime;
   const buckets = 1;
 
   const data = await axios.get(url, {
@@ -82,7 +79,7 @@ export default function hotLoad(WrappedComponent, funList) {
       funList.forEach(async arr => {
         await this.updateState(arr);
       });
-      this.setState({ loaded: true })
+      this.setState({ loaded: true });
     }
 
     componentDidUpdate(prevProps) {
