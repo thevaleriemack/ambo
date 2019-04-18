@@ -43,11 +43,23 @@ class Account extends Component {
       if (this.props.eth.enabled) {
         return <AccountAddress />;
       } else {
+
+        const disabled = ((this.props.eth.networkId !== "1")
+                          || (this.props.eth.networkId !== "4")) ?
+                          false : true;
+
         return (
-          <Button key="1" type="primary" onClick={this.handleConnect}>
-            Connect Wallet
+          <Button
+            key="1"
+            type="primary"
+            onClick={this.handleConnect}
+            disabled={disabled}
+          >
+            {(!disabled && "Connect Wallet")
+             || "Selected network not available"}
           </Button>
         );
+
       }
 
     } else {
