@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { Avatar, Card, Col, Empty, Row, Skeleton } from 'antd';
+import { Avatar, Card, Col, Icon, Row, Spin } from 'antd';
 import { connect } from 'react-redux';
 
 import ActivateAsset from './ActivateAsset';
@@ -52,7 +52,12 @@ const AssetCard = (props) => {
         style={{ marginTop: 16 }}
         extra={<CardDataConnected {...props} />}
       >
-      {loading && <Skeleton paragraph={{ rows: 1 }} />}
+      {loading &&
+        <Spin className="rate-loading" indicator={
+          <Icon type="loading" spin />
+        }
+        />
+      }
       {!loading &&
         <div>
           {assetRate &&
@@ -66,14 +71,9 @@ const AssetCard = (props) => {
             </Row>
           }
           {!assetRate &&
-            <Empty
-              image={""}
-              description={
-                <span>
-                  Oops! The data could not be retrieved. Please try again.
-                </span>
-              }
-            />
+            <span>
+              Oops! The data could not be retrieved. Please try again.
+            </span>
           }
         </div>
       }

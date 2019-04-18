@@ -27,9 +27,9 @@ class AccountBalances extends Component {
   }
 
   renderAvailable = (borrow, lend) => {
-      const reqLendAmount = borrow * 1.5;
-      const available = lend - reqLendAmount;
-      return this.convertToFiat(available);
+    const reqLendAmount = borrow * 1.5;
+    const available = lend - reqLendAmount;
+    return this.convertToFiat(available);
   }
 
   render() {

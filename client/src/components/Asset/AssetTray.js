@@ -62,7 +62,9 @@ class AssetTray extends Component {
 const AssetTrayHotLoaded = hotLoad(
   AssetTray,
   [
-    ["walletBalance", (props) => [props.user.address, props.ticker, props.eth.networkId]]
+    ["walletBalance", (props) => [
+      props.user.address, props.ticker, props.eth.networkId
+    ]]
   ]
 );
 

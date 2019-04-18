@@ -1,3 +1,9 @@
 .rates {
     text-align: center;
 }
+
+.rate-loading {
+    text-align: center;
+    align-self: center;
+    justify-self: center;
+}
