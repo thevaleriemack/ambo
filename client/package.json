@@ -1,6 +1,6 @@
 {
-  "name": "ambo-client",
-  "version": "0.1.0",
+  "name": "dephi-client",
+  "version": "0.0.1",
   "private": true,
   "author": "thevaleriemack",
   "dependencies": {

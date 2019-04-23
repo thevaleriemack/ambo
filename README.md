@@ -1,10 +1,10 @@
-# Ambo
-Borrow and Lend Crypto on Ambo
+# Dephi
+Borrow and Lend Crypto with Dephi
 
-Don't let your assets sit idle! Ambo allows you to earn money from holding crypto, and borrow funds whenever you need.
+Don't let your assets sit idle! Dephi allows you to earn money from holding crypto, and borrow funds whenever you need.
 
 # About
-This repository is home to the Ambo web application--a dApp that allows users to borrow and lend their crypto assets with the Compound Finance MoneyMarket.
+This repository is home to the Dephi web application--a dApp that allows users to borrow and lend their crypto assets with the Compound Finance MoneyMarket.
 
 ### TOC:
 [Usage](#usage)
