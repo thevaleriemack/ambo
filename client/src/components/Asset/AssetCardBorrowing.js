@@ -1,30 +1,36 @@
 import React from 'react';
-import { Col, Icon, Row, Spin } from 'antd';
+import { Col, Row, Statistic } from 'antd';
 
 const AssetCardBorrowing = (props) => {
+  const fiatValue = (props.prices && props.prices[props.user.currency]) * props.borrowBalance;
   return (
     <div>
       {props.loading && props.spinner}
       {!props.loading &&
         <div>
           <Row type="flex" justify="space-between" className="rates">
-            <Col span={4}>
-                {props.assetRate &&
-                  <div>Borrow at {props.borrowRate} APR</div>
-                }
-                {!props.assetRate &&
-                  <div>
-                    --
-                  </div>
-                }
-              </Col>
-              <Col span={4}>
-                <div>Interest</div>
-              </Col>
-              <Col span={4}>
-                <div>Balance</div>
-              </Col>
-            </Row>
+            <Col span={6}>
+              <Statistic
+                title="APR"
+                value={props.assetRate && props.borrowRate}
+                suffix="%"
+              />
+            </Col>
+            <Col span={6}>
+              <Statistic
+                title="Balance"
+                value={String(props.borrowBalance)}
+                suffix={props.ticker}
+              />
+            </Col>
+            <Col span={6}>
+              <Statistic
+                title="Value"
+                value={fiatValue && fiatValue.toFixed(2)}
+                suffix={props.user.currency}
+              />
+            </Col>
+          </Row>
         </div>
       }
     </div>

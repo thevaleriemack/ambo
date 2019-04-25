@@ -32,8 +32,14 @@ class CardData extends Component {
 
 const CardDataConnected = connect(({ user }) => ({ user }))(CardData);
 
+const formatBalance = (amt) => {
+  if (amt > 0) {
+    return (Math.floor((amt / 1000000000000000000) * 10000) / 10000);
+  }
+}
+
 const formatRate = (rate) => {
-  if (rate) return (rate * 100).toFixed(2) + "%";
+  if (rate) return (rate * 100).toFixed(2);
 }
 
 const renderSpinner = () => (
@@ -63,22 +69,24 @@ const AssetCard = (props) => {
       >
         {(props.lendBalance > 0) &&
           <AssetCardLending
+            {...props}
             cardData={<CardDataConnected {...props} />}
             assetRate={assetRate}
             loading={loading}
             spinner={renderSpinner()}
             lendRate={formatRate(lendRate)}
-            {...props}
+            lendBalance={formatBalance(props.lendBalance)}
           />
         }
         {(props.borrowBalance > 0) &&
           <AssetCardBorrowing
+            {...props}
             cardData={<CardDataConnected {...props} />}
             assetRate={assetRate}
             loading={loading}
             spinner={renderSpinner()}
             borrowRate={formatRate(borrowRate)}
-            {...props}
+            borrowBalance={formatBalance(props.borrowBalance)}
           />
         }
         {!props.inUse &&
@@ -88,18 +96,18 @@ const AssetCard = (props) => {
               <div>
                 {assetRate &&
                   <Row type="flex" justify="space-between" className="rates">
-                    <Col span={6}>
-                      <div>Borrow at {formatRate(borrowRate)} APR</div>
+                    <Col span={8}>
+                      <div>Borrow at {formatRate(borrowRate)}% APR</div>
                     </Col>
                     <Col span={6}>
-                      <div>Lend at {formatRate(lendRate)} APR</div>
+                      <div>Lend at {formatRate(lendRate)}% APR</div>
                     </Col>
                   </Row>
                 }
                 {!assetRate &&
                   <span>
                     Oops! The data could not be retrieved. Please try again.
-              </span>
+                  </span>
                 }
               </div>
             }

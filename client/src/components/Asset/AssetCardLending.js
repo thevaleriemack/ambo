@@ -1,7 +1,8 @@
 import React from 'react';
-import { Col, Icon, Row, Spin } from 'antd';
+import { Col, Row, Statistic } from 'antd';
 
 const AssetCardLending = (props) => {
+  const fiatValue = (props.prices && props.prices[props.user.currency]) * props.lendBalance;
   return (
     <div>
       {props.loading && props.spinner}
@@ -9,20 +10,25 @@ const AssetCardLending = (props) => {
         <div>
           <Row type="flex" justify="space-between" className="rates">
             <Col span={6}>
-              <div>Earnings</div>
+              <Statistic
+                title="Value"
+                value={fiatValue && fiatValue.toFixed(2)}
+                suffix={props.user.currency}
+              />
             </Col>
             <Col span={6}>
-              <div>Balance</div>
+              <Statistic
+                title="Balance"
+                value={String(props.lendBalance)}
+                suffix={props.ticker}
+              />
             </Col>
             <Col span={6}>
-              {props.assetRate &&
-                <div>Lend at {props.lendRate} APR</div>
-              }
-              {!props.assetRate &&
-                <div>
-                  --
-                </div>
-              }
+              <Statistic
+                title="APR"
+                value={props.assetRate && props.lendRate}
+                suffix="%"
+              />
             </Col>
           </Row>
         </div>
