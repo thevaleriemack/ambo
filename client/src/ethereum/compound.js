@@ -64,3 +64,45 @@ export const borrow = (networkId, from, assetAddr, amt) => {
     // error
   }
 }
+
+const getAccountAssetBalance = async (networkId, userAddr, assetAddr, opt) => {
+
+  let method = "";
+  if (opt === "lend") {
+    method = "getSupplyBalance";
+  } else if (opt === "borrow") {
+    method = "getBorrowBalance";
+  } else {
+    console.error("Invalid opt given to getAccountAssetBalance");
+    return null;
+  }
+
+  const Contract = getContractInstance(networkId);
+  
+  if (Contract !== null) {
+    const result = await Contract.methods[method](userAddr, assetAddr)
+      .call()
+      .then((supplyBalance) => {
+        if (supplyBalance == 0) {
+          return null;
+        }
+        return supplyBalance;
+      })
+      .catch((err) => {
+        console.error(err);
+        return null;
+      });
+    return result;
+  } else {
+    console.error("No valid contract");
+    return null;
+  }
+}
+
+export const getLendBalance = async (networkId, userAddr, assetAddr) => {
+  return await getAccountAssetBalance(networkId, userAddr, assetAddr, "lend");
+}
+
+export const getBorrowBalance = async (networkId, userAddr, assetAddr) => {
+  return await getAccountAssetBalance(networkId, userAddr, assetAddr, "borrow");
+}
