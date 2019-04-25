@@ -3,7 +3,6 @@ import { Button } from 'antd';
 import { connect } from 'react-redux';
 
 import { activateAsset } from '../../ethereum/assets';
-import { setUserActivatedList } from '../../store/user';
 
 class ActivateAsset extends Component {
 
@@ -34,5 +33,5 @@ class ActivateAsset extends Component {
 
 export default connect(
   ({account, eth, user}) => ({account, eth, user}),
-  { setUserActivatedList }
+  null
 )(ActivateAsset);

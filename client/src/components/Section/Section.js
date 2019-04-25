@@ -8,14 +8,14 @@ const renderAssets = (assets) => {
       key={asset.ticker}
       {...asset}
     />
-  ))
+  ));
 }
 
 const Section = (props) => {
   return(
     <div className="Section" id={props.heading.toString()}>
       <h5>{props.heading}</h5>
-      {props.children}
+      {(props.assets.length < 1) && props.children}
       {renderAssets(props.assets)}
     </div>
   );

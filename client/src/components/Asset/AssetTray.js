@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import { Col, Row } from 'antd';
 import { connect } from 'react-redux';
 
+import AssetTrayBorrowing from './AssetTrayBorrowing';
+import AssetTrayLending from './AssetTrayLending';
 import Borrow from '../Compound/Borrow';
 import Lend from '../Compound/Lend';
 import hotLoad from '../hotLoad';
 
 class AssetTray extends Component {
 
-  renderBalance = (amt) => {
+  formatBalance = (amt) => {
     if ((amt !== undefined) && (amt !== null)) {
       const amount = amt.toString();
       let p1 = amount.slice(0, -18);
@@ -17,44 +19,62 @@ class AssetTray extends Component {
     }
   }
 
+  renderWalletBalance = () => (
+    <Col
+      className="gutter-row"
+      span={8}
+      style={{textAlign: "center"}}
+    >
+      <div className="gutter-box">
+        Your Wallet Balance
+      </div>
+      <div>
+        {this.formatBalance(this.props.api.walletBalance)}
+      </div>
+    </Col>
+  )
+
   render() {
     return (
-      <div>
-        <Row gutter={16}>
-        <Col className="gutter-row" span={8}>
-            <div className="gutter-box">Borrow</div>
-            {this.props.account.connected &&
-              <Borrow
-                limit={this.props.api.walletBalance}
-                assetAddress={this.props.address}
-                assetTicker={this.props.ticker}
-              />
-            }
-          </Col>
-          <Col
-            className="gutter-row"
-            span={8}
-            style={{textAlign: "center"}}
-          >
-            <div className="gutter-box">
-              Your Wallet Balance
-            </div>
-            <div>
-              {this.renderBalance(this.props.api.walletBalance)}
-            </div>
-          </Col>
-          <Col className="gutter-row" span={8}>
-            <div className="gutter-box">Lend</div>
-            {this.props.account.connected &&
-              <Lend
-                limit={this.props.api.walletBalance}
-                assetAddress={this.props.address}
-                assetTicker={this.props.ticker}
-              />
-            }
-          </Col>
-        </Row>
-      </div>
+      <Row gutter={16}>
+        {(this.props.lendBalance > 0) &&
+          <AssetTrayLending
+            walletBalance={this.renderWalletBalance(this.props.api.walletBalance)}
+            {...this.props}
+          />
+        }
+        {(this.props.borrowBalance > 0) &&
+          <AssetTrayBorrowing
+            walletBalance={this.renderWalletBalance(this.props.api.walletBalance)}
+            {...this.props}
+          />
+        }
+        {!this.props.inUse &&
+          <div>
+            <Col className="gutter-row" span={8}>
+              <div className="gutter-box">Borrow Coming Soon</div>
+              {this.props.account.connected &&
+                <Borrow
+                  limit={this.props.api.walletBalance}
+                  assetAddress={this.props.address}
+                  assetTicker={this.props.ticker}
+                />
+              }
+            </Col>
+            {this.renderWalletBalance(this.props.api.walletBalance)}
+            <Col className="gutter-row" span={8}>
+              <div className="gutter-box">Lend</div>
+              {this.props.account.connected &&
+                <Lend
+                  limit={this.props.api.walletBalance}
+                  assetAddress={this.props.address}
+                  assetTicker={this.props.ticker}
+                />
+              }
+            </Col>
+          </div>
+        }
+      </Row>
     );
   }
 }

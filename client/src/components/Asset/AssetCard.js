@@ -3,6 +3,8 @@ import { Avatar, Card, Col, Icon, Row, Spin } from 'antd';
 import { connect } from 'react-redux';
 
 import ActivateAsset from './ActivateAsset';
+import AssetCardBorrowing from './AssetCardBorrowing';
+import AssetCardLending from './AssetCardLending';
 import hotLoad from '../hotLoad';
 
 const { Meta } = Card;
@@ -49,36 +51,56 @@ const AssetCard = (props) => {
             description={props.name}
           />
         }
-        style={{ marginTop: 16 }}
+        style={{ marginTop: 16, ...props.inUse }}
         extra={<CardDataConnected {...props} />}
       >
-      {loading &&
-        <Spin className="rate-loading" indicator={
-          <Icon type="loading" spin />
-        }
+      {(props.lendBalance > 0) &&
+        <AssetCardLending
+          cardData={<CardDataConnected {...props} />}
+          assetRate={assetRate}
+          lendRate={renderRate(lendRate)}
+          {...props}
         />
       }
-      {!loading &&
-        <div>
-          {assetRate &&
-            <Row type="flex" justify="space-between" className="rates">
-              <Col span={6}>
-                <div>Borrow at {renderRate(borrowRate)} APR</div>
-              </Col>
-              <Col span={6}>
-                <div>Lend at {renderRate(lendRate)} APR</div>
-              </Col>
-            </Row>
-          }
-          {!assetRate &&
-            <span>
-              Oops! The data could not be retrieved. Please try again.
-            </span>
-          }
-        </div>
+      {(props.borrowBalance > 0) &&
+        <AssetCardBorrowing
+          cardData={<CardDataConnected {...props} />}
+          assetRate={assetRate}
+          borrowRate={renderRate(borrowRate)}
+          {...props}
+        />
       }
+      {!props.inUse &&
+        <div>
+        {loading &&
+          <Spin className="rate-loading" indicator={
+            <Icon type="loading" spin />
+          }
+          />
+        }
+        {!loading &&
+          <div>
+            {assetRate &&
+              <Row type="flex" justify="space-between" className="rates">
+                <Col span={6}>
+                  <div>Borrow at {renderRate(borrowRate)} APR</div>
+                </Col>
+                <Col span={6}>
+                  <div>Lend at {renderRate(lendRate)} APR</div>
+                </Col>
+              </Row>
+            }
+            {!assetRate &&
+              <span>
+                Oops! The data could not be retrieved. Please try again.
+              </span>
+            }
+          </div>
+        }
+        </div>
+        }
       </Card>
-    </div>
+      </div>
   );
 }
 

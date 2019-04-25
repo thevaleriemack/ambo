@@ -5,9 +5,16 @@ import { Collapse } from 'reactstrap';
 import AssetCard from './AssetCard';
 import AssetTray from './AssetTray';
 import { assetActivated } from '../../ethereum/assets';
-import { setUserActivatedList } from '../../store/user';
 
 import './Asset.css';
+
+const styles = {
+  "WETH": {backgroundColor: "#5E6FA5"},
+  "REP": {backgroundColor: "#9C82F5"},
+  "DAI": {backgroundColor: "#FBBA03"},
+  "ZRX": {backgroundColor: "#CCC"},
+  "BAT": {backgroundColor: "#FF5001"}
+}
 
 class Asset extends Component {
 
@@ -24,6 +31,9 @@ class Asset extends Component {
   }
 
   render() {
+    const inUse = ((this.props.lendBalance > 0)
+                   || (this.props.borrowBalance > 0))
+                  ? styles[this.props.ticker] : null;
     return(
       <div>
         <AssetCard
@@ -31,6 +41,7 @@ class Asset extends Component {
           activated={this.isActivated()}
           onClick={() => this.setTrayOpen(!this.state.trayOpen)}
           imageUrl={this.props.assets.images[this.props.lookup]}
+          inUse={inUse}
         />
         <Collapse
           isOpen={this.state.trayOpen}
@@ -39,6 +50,7 @@ class Asset extends Component {
           <AssetTray
             {...this.props}
             activated={this.isActivated()}
+            inUse={inUse}
           />
         }
         </Collapse>
@@ -49,5 +61,5 @@ class Asset extends Component {
 
 export default connect(
   ({account, assets, user}) => ({account, assets, user}),
-  { setUserActivatedList }
+  null
 )(Asset);
