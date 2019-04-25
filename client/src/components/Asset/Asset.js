@@ -9,11 +9,11 @@ import { assetActivated } from '../../ethereum/assets';
 import './Asset.css';
 
 const styles = {
-  "WETH": {backgroundColor: "#5E6FA5"},
+  "WETH": {backgroundColor: "rgba(148, 174, 255, 1)"},
   "REP": {backgroundColor: "#9C82F5"},
-  "DAI": {backgroundColor: "#FBBA03"},
-  "ZRX": {backgroundColor: "#CCC"},
-  "BAT": {backgroundColor: "#FF5001"}
+  "DAI": {backgroundColor: "rgba(255, 214, 99, 1)"},
+  "ZRX": {backgroundColor: "rgba(204, 204, 204, 1)"},
+  "BAT": {backgroundColor: "rgba(255, 80, 1, 0.7)"}
 }
 
 class Asset extends Component {
