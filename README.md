@@ -9,8 +9,6 @@ This repository is home to the Dephi web application--a dApp that allows users t
 ### TOC:
 [Usage](#usage)
 
-[Goals](#goals)
-
 [Primary Tools & Technologies](#primary%20tools%20%26%20technologies)
 
 [Folder Structure](#folder%20structure)
@@ -29,13 +27,13 @@ Changes are merged in from __dev__ to __master__ before being deployed to produc
 - npm >= 5.2
 
 1. Clone this repository
-1. In the root of /api add a .env file with 3 API keys
+2. In the root of /api add a .env file with 3 API keys
 ```
 CRYPTO_COMPARE_KEY="Apikey <key>"
 COMPOUND_KEY="<key>"
 ETHERSCAN_KEY="<key>"
 ```
-1. Run the api server
+3. Run the api server
 ```
 $ cd ambo
 $ cd api
@@ -54,17 +52,15 @@ $ npm run start
 
 - "Connect" your MetaMask wallet
 - Check your Compound Finance balances
+- View Compound Finance assets and their rates
 - Approve an ERC20 by clicking "Activate"
-- View Compound Finance assets
 - Lend funds and earn interest
 
 ### In Progress
 
 - Borrow, repay, and withdraw (In the meantime, these can be done on the Compound Finance app until completed here.)
-- View rates
-- Testnet
-- Localize
-- Moar API error handling for ease of use
+- Rinkeby Testnet
+- i18n
 
 # Primary Tools & Technologies
 
