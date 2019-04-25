@@ -32,8 +32,8 @@ class Asset extends Component {
 
   render() {
     const inUse = ((this.props.lendBalance > 0)
-                   || (this.props.borrowBalance > 0))
-                  ? styles[this.props.ticker] : null;
+                   || (this.props.borrowBalance > 0));
+    const inUseStyle = (inUse) ? styles[this.props.ticker] : null;
     return(
       <div>
         <AssetCard
@@ -42,6 +42,7 @@ class Asset extends Component {
           onClick={() => this.setTrayOpen(!this.state.trayOpen)}
           imageUrl={this.props.assets.images[this.props.lookup]}
           inUse={inUse}
+          inUseStyle={inUseStyle}
         />
         <Collapse
           isOpen={this.state.trayOpen}
@@ -51,6 +52,7 @@ class Asset extends Component {
             {...this.props}
             activated={this.isActivated()}
             inUse={inUse}
+            inUseStyle={inUseStyle}
           />
         }
         </Collapse>

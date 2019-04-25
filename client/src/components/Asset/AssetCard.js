@@ -32,9 +32,16 @@ class CardData extends Component {
 
 const CardDataConnected = connect(({ user }) => ({ user }))(CardData);
 
-const renderRate = (rate) => {
+const formatRate = (rate) => {
   if (rate) return (rate * 100).toFixed(2) + "%";
 }
+
+const renderSpinner = () => (
+  <Spin className="rate-loading" indicator={
+    <Icon type="loading" spin />
+  }
+  />
+);
 
 const AssetCard = (props) => {
   const assetRate = props.api.assetRate;
@@ -51,56 +58,55 @@ const AssetCard = (props) => {
             description={props.name}
           />
         }
-        style={{ marginTop: 16, ...props.inUse }}
+        style={{ marginTop: 16, ...props.inUseStyle }}
         extra={<CardDataConnected {...props} />}
       >
-      {(props.lendBalance > 0) &&
-        <AssetCardLending
-          cardData={<CardDataConnected {...props} />}
-          assetRate={assetRate}
-          lendRate={renderRate(lendRate)}
-          {...props}
-        />
-      }
-      {(props.borrowBalance > 0) &&
-        <AssetCardBorrowing
-          cardData={<CardDataConnected {...props} />}
-          assetRate={assetRate}
-          borrowRate={renderRate(borrowRate)}
-          {...props}
-        />
-      }
-      {!props.inUse &&
-        <div>
-        {loading &&
-          <Spin className="rate-loading" indicator={
-            <Icon type="loading" spin />
-          }
+        {(props.lendBalance > 0) &&
+          <AssetCardLending
+            cardData={<CardDataConnected {...props} />}
+            assetRate={assetRate}
+            loading={loading}
+            spinner={renderSpinner()}
+            lendRate={formatRate(lendRate)}
+            {...props}
           />
         }
-        {!loading &&
+        {(props.borrowBalance > 0) &&
+          <AssetCardBorrowing
+            cardData={<CardDataConnected {...props} />}
+            assetRate={assetRate}
+            loading={loading}
+            spinner={renderSpinner()}
+            borrowRate={formatRate(borrowRate)}
+            {...props}
+          />
+        }
+        {!props.inUse &&
           <div>
-            {assetRate &&
-              <Row type="flex" justify="space-between" className="rates">
-                <Col span={6}>
-                  <div>Borrow at {renderRate(borrowRate)} APR</div>
-                </Col>
-                <Col span={6}>
-                  <div>Lend at {renderRate(lendRate)} APR</div>
-                </Col>
-              </Row>
-            }
-            {!assetRate &&
-              <span>
-                Oops! The data could not be retrieved. Please try again.
+            {loading && renderSpinner()}
+            {!loading &&
+              <div>
+                {assetRate &&
+                  <Row type="flex" justify="space-between" className="rates">
+                    <Col span={6}>
+                      <div>Borrow at {formatRate(borrowRate)} APR</div>
+                    </Col>
+                    <Col span={6}>
+                      <div>Lend at {formatRate(lendRate)} APR</div>
+                    </Col>
+                  </Row>
+                }
+                {!assetRate &&
+                  <span>
+                    Oops! The data could not be retrieved. Please try again.
               </span>
+                }
+              </div>
             }
           </div>
         }
-        </div>
-        }
       </Card>
-      </div>
+    </div>
   );
 }
 

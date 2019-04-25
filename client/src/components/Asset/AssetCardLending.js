@@ -1,22 +1,11 @@
 import React from 'react';
-import { Avatar, Card, Col, Icon, Row, Spin } from 'antd';
-
-const { Meta } = Card;
+import { Col, Icon, Row, Spin } from 'antd';
 
 const AssetCardLending = (props) => {
-  const assetRate = props.assetRate;
-  const lendRate = props.lendRate;
-  const loading = (assetRate === undefined) ? true : false;
-  const inUse = props.inUse;
   return (
     <div>
-      {loading &&
-        <Spin
-          className="rate-loading"
-          indicator={<Icon type="loading" spin />}
-        />
-      }
-      {!loading &&
+      {props.loading && props.spinner}
+      {!props.loading &&
         <div>
           <Row type="flex" justify="space-between" className="rates">
             <Col span={6}>
@@ -26,10 +15,10 @@ const AssetCardLending = (props) => {
               <div>Balance</div>
             </Col>
             <Col span={6}>
-              {assetRate &&
-                <div>Lend at {lendRate} APR</div>
+              {props.assetRate &&
+                <div>Lend at {props.lendRate} APR</div>
               }
-              {!assetRate &&
+              {!props.assetRate &&
                 <div>
                   --
                 </div>
