@@ -46,13 +46,11 @@ class Main extends Component {
       .then(() => {
         if (this.props.eth.namespaced) {
           ethereumListener(() => {
-            if (this.props.eth.enabled) {
-              this.updateCredentials()
-                .then(() => {
-                  this.props.getAllAssets(this.props.eth.networkId);
-                  this.sortAssets(this.props.user.address);
-                });
-            }
+            this.updateCredentials()
+              .then(() => {
+                this.props.getAllAssets(this.props.eth.networkId);
+                this.sortAssets(this.props.user.address);
+              });
           });
         }
       });

@@ -4,18 +4,30 @@ export const web3 = (Web3.givenProvider) ? new Web3(Web3.givenProvider) : null;
 
 export const ethereum = window.ethereum;
 
+// TODO: switch statement for networks we support
+
 export const connectProvider = async () => {
-  const connected = ethereum.enable()
-    .catch((reason) => {
-      console.error(reason);
-      return false;
-    })
-    .then(() => { return true; });
-  return connected;
+  // Only allow connection to networks that we support
+  if ((ethereum.networkVersion === "1")
+      || (ethereum.networkVersion === "4")) {
+    const connected = ethereum.enable()
+      .catch((reason) => {
+        console.error(reason);
+        return false;
+      })
+      .then(() => {
+        // Force an update to the listener
+        ethereum.emit("update");
+        return true;
+      });
+    return connected;
+  } else {
+    return false;
+  }
 }
 
 export const ethereumListener = (fun) => {
-  ethereum.publicConfigStore.on('update', () => {
+  ethereum.on('update', () => {
     fun();
   });
 }

@@ -20,17 +20,21 @@ import './Account.css';
 
 class Account extends Component {
 
+  state = {
+    buttonDisabled: false
+  }
+
   handleConnect = async () => {
     if (this.props.eth.namespaced) {
       const connected = await connectProvider();
       this.props.updateEnabledStatus(connected);
       this.props.setAccountConnected(connected);
+      this.updateButtonDisabledState(!connected);
     }
   }
 
   renderNetworkTag = () => {
-    if ((this.props.eth.networkId !== "1") &&
-      (this.props.eth.networkId !== "")) {
+    if (this.props.eth.networkId === "4") {
       return <Tag color="blue">{this.props.eth.networkName}</Tag>;
     } else {
       return null;
@@ -39,31 +43,22 @@ class Account extends Component {
 
   renderAddress = () => {
     if (this.props.eth.namespaced) {
-
       if (this.props.eth.enabled) {
         return <AccountAddress />;
       } else {
-
-        const disabled = ((this.props.eth.networkId !== "1")
-                          || (this.props.eth.networkId !== "4")) ?
-                          false : true;
-
         return (
           <Button
             key="1"
             type="primary"
             onClick={this.handleConnect}
-            disabled={disabled}
+            disabled={this.state.buttonDisabled}
           >
-            {(!disabled && "Connect Wallet")
+            {(!this.state.buttonDisabled && "Connect Wallet")
              || "Selected network not available"}
           </Button>
         );
-
       }
-
-    } else {
-
+    } else { // when we are not namespaced
       if (this.props.account.connected) {
         return <AccountAddress />;
       } else {
@@ -74,8 +69,11 @@ class Account extends Component {
           />
         );
       }
-
     }
+  }
+
+  updateButtonDisabledState = (buttonDisabled) => {
+      this.setState({buttonDisabled});
   }
 
   render() {
